@@ -17,7 +17,7 @@ class CommentFactory extends Factory
     {
         return [
             "content" => $this->faker->text(50),
-            "user_id" => User::factory(),
+            //"user_id" => User::factory(),
             "product_id" => Product::factory(),
             "created_at" => now()
         ];
