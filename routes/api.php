@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\V1\PostApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\V1\AuthController; //implementar esto
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::prefix('v1')->group(function(){
+    //Todo lo que haya en este grupo se accederá escribiendo ~/api/v1/*
+    Route::post('login', [AuthController::class, 'authenticate']);
+   
+   //registro
+   Route::post('register', [AuthController::class, 'register']);
+
+   Route::group(['middleware' => ['jwt.verify']], function(){
+       //todo lo que haya en este grupo requiere autenticacion de usuario
+       Route::post('logout', [AuthController::class, 'logout']);
+
+       //ruta para obtener usuario
+       Route::post('get-user', [AuthController::class, 'getUser']);
+
+       //la ruta para que nos de los posts
+       Route::get('posts', [PostApiController::class, 'index']);
+       //mostrar un post
+       Route::get('posts/{id}', [PostApiController::class, 'showOne']);
+
+       //Crear post
+       Route::post('posts', [PostApiController::class, 'store']);
+
+       //hacer un update
+       Route::put('posts/{id}', [PostApiController::class, 'update']);
+   });
+ });
+ 
