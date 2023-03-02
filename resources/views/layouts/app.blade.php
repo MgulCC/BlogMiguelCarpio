@@ -33,6 +33,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                    @if( auth()->check())
+                        <li class="nav-item">
+                            <!-- añadir enlaces en el menu -->
+                            <a class="nav-link" href="{{ route('post.index') }}">{{ __('Posts') }}
+                        </li>
+                        @endif
 
                     </ul>
 

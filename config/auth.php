@@ -35,9 +35,14 @@ return [
     |
     */
 
-    'guards' => [
+   //tenemos que hacer hacer el guard
+   'guards' => [
         'web' => [
             'driver' => 'session',
+            'provider' => 'users',
+        ],
+        'api' => [
+            'driver' => 'jwt',
             'provider' => 'users',
         ],
     ],

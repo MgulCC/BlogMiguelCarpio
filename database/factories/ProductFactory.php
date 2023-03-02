@@ -19,7 +19,7 @@ class ProductFactory extends Factory
             'description' => $this->faker->text(1000),
             'quantity' => $this->faker->randomDigit,
             'status' => $this->faker->randomDigit,
-            'seller_id' => User::factory()
+            'seller_id' => rand(1, 20)
 
         ];
     }
