@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\V1\PostApiController;
+use App\Http\Controllers\V1\ProductApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\V1\AuthController; //implementar esto
@@ -30,7 +31,7 @@ Route::prefix('v1')->group(function(){
        //ruta para obtener usuario
        Route::post('get-user', [AuthController::class, 'getUser']);
 
-       //la ruta para que nos de los posts
+       //las rutas para que nos de los posts
        Route::get('posts', [PostApiController::class, 'index']);
        //mostrar un post
        Route::get('posts/{id}', [PostApiController::class, 'showOne']);
@@ -40,6 +41,17 @@ Route::prefix('v1')->group(function(){
 
        //hacer un update
        Route::put('posts/{id}', [PostApiController::class, 'update']);
+
+       //las rutas para que nos de los products
+       Route::get('products', [ProductApiController::class, 'index']);
+       //mostrar un post
+       Route::get('products/{id}', [ProductApiController::class, 'showOne']);
+
+       //Crear post
+       Route::post('products', [ProductApiController::class, 'store']);
+
+       //hacer un update
+       Route::put('products/{id}', [ProductApiController::class, 'update']);
    });
  });
  

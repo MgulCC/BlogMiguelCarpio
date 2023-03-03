@@ -31,7 +31,6 @@ class Notificacion extends Mailable
     public function build()
     {
         return $this->view('email')->subject("Guardia civil")
-        ->from("miguel.carpio@test3.qastusoft.com.es", "Miguel Carpio" )
-        ->attachFromStorage("adjunto.pdf");
+        ->from("miguel.carpio@test3.qastusoft.com.es", "Miguel Carpio" );
     }
 }

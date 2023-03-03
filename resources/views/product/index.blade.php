@@ -16,14 +16,16 @@
             {{ Session::get('mensaje') }}
         </div>
     @endif
-    Listado de posts
-    <a href="{{ url('post/create') }}" class="btn btn-info">escribir un post</a>
+    Listado de productos
+    <a href="{{ url('product/create') }}" class="btn btn-info">escribir un producto</a>
     <hr>
     <table class="table data-table" id="miTabla">
         <thead>
             <tr>
                 <th>#</th>
-                <th>title</th>
+                <th>name</th>
+                <th>description</th>
+                <th>quantity</th>
                 <th>status</th>
                 
 
@@ -31,20 +33,22 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($posts as $post)
+            @foreach ($products as $product)
             <tr>
-                <td>{{$post->id }}</td>
-                <td>{{$post->title}}</td>
-                <td>{{$post->status}}</td>
+                <td>{{$product->id}}</td>
+                <td>{{$product->name}}</td>
+                <td>{{$product->description}}</td>
+                <td>{{$product->quantity}}</td>
+                <td>{{$product->status}}</td>
                 
                 <td>
                     <div class="btn-group" role="group">
-                        <a href="{{ url('post/' . $post->id) }}" class="btn btn-primary">ver</a>
-                        <a href="{{ url('post/' . $post->id . '/edit') }}" class="btn btn-warning">editar</a>
-                        <form action="{{url('post/' . $post->id) }}" method="post">
+                        <a href="{{ url('product/' . $product->id) }}" class="btn btn-primary">ver</a>
+                        <a href="{{ url('product/' . $product->id . '/edit') }}" class="btn btn-warning">editar</a>
+                        <form action="{{url('product/' . $product->id) }}" method="post">
                             @csrf
                             {{ method_field('DELETE') }}
-                            <input type="submit" onclick="return confirm('se va a elmiminar el registro #{{ $post->id}}')" class="btn btn-danger" value="Borrar">
+                            <input type="submit" onclick="return confirm('se va a elmiminar el registro #{{ $product->id}}')" class="btn btn-danger" value="Borrar">
                         </form>
                     </div>
                 </td>
@@ -53,7 +57,7 @@
             
         </tbody>
     </table>
-    {!! $posts->links() !!}
+    {!! $products->links() !!}
 </div>
 @endsection
 

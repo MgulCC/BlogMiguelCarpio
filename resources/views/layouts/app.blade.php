@@ -38,7 +38,11 @@
                             <!-- añadir enlaces en el menu -->
                             <a class="nav-link" href="{{ route('post.index') }}">{{ __('Posts') }}
                         </li>
-                        @endif
+                        <li class="nav-item">
+                            <!-- añadir enlaces en el menu -->
+                            <a class="nav-link" href="{{ route('product.index') }}">{{ __('Products') }}
+                        </li>
+                    @endif
 
                     </ul>
 
@@ -85,5 +89,7 @@
             @yield('content')
         </main>
     </div>
+    @yield('footer')
 </body>
+@yield('datatable')
 </html>

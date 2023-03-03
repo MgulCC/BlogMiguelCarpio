@@ -4,7 +4,7 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Post; //necesitamos el modelo alumno
+use App\Models\Product; //necesitamos el modelo alumno
 use JWTAuth; //el JWTAuth
 use Symfony\Component\HttpFoundation\Response; //Response
 use Illuminate\Support\Facades\Validator; //validador
@@ -14,31 +14,33 @@ class PostApiController extends Controller
 {   
     //lista los posts
     public function index(){
-        return Post::get();
+        return Product::get();
     }
 
     public function showOne($id){
         //buscar el post por id
-        $post = Post::find($id);
+        $product = Product::find($id);
 
         //si el post no existe devolvemos un error
-        if(!$post){
+        if(!$product){
             return response()->json([
-                'message' => 'Post not found.'
+                'message' => 'Product out of service.'
             ], 404);
         }
 
         //si hay un post, lo devolvemos
-        return $post;
+        return $product;
     }
 
     public function store(Request $request){
         //validar los datos recibidos
-        $data = $request->only('title', 'status');
+        $data = $request->only('name', 'description', 'quantity', 'status');
 
         $validator = Validator::make($data, [
-            'title' => 'required|string|max:255',
-            'status' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'quantity' => 'required|int|min:6|max:100',
+            'status' => 'required|int|min:6|max:100'
         ]);
 
         //si falla la validacion
@@ -46,27 +48,31 @@ class PostApiController extends Controller
             return response()->json(['error' => $validator->messages()], 400);
         }
 
-        //cramos el alumno en la bd
-        $post = post::create([
-            'title' => $request->title,
+        //cramos el producto en la bd
+        $product = Product::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'quantity' => $request->quantity,
             'status' => $request->status,
             
         ]);
 
         return response()->json([
-            'message' => 'Post created',
-            'data' => $post
+            'message' => 'Product created',
+            'data' => $product
         ], Response::HTTP_OK);
     }
 
 
     public function update(Request $request, $id){
         //validar datos
-        $data = $request->only('title', 'status');
+        $data = $request->only('name', 'description', 'quantity', 'status');
 
         $validator = Validator::make($data, [
-            'title' => 'required|string|max:255',
-            'status' => 'required|string|max:255'
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'quantity' => 'required|int|min:6|max:100',
+            'status' => 'required|int|min:6|max:100'
         ]);
 
         //si falla
@@ -74,36 +80,36 @@ class PostApiController extends Controller
             return response()->json(['error' => $validator->messages()], 400);
         }
 
-        //Buscamos el post
-        $post = Post::findOrfail($id);
+        //Buscamos el product
+        $product = Product::findOrfail($id);
 
-        $post->update($data);
+        $product->update($data);
 
         //Devolver los datos actualizados
         return response()->json([
             'message' => 'Post updates',
-            'data' => $post
+            'data' => $product
         ], Response::HTTP_OK);
     }
 
     public function destroy($id){
         //buscamos el post
-        $post = post::find($id);
+        $product = Product::find($id);
 
-        if($post){
+        if($product){
 
             //eliminamos el post
-            $post->delete();
+            $product->delete();
 
             //devolvemos respuesta
             return response()->json([
-                'messsage' => 'Post eliminado'
+                'messsage' => 'Product eliminado'
             ]);
 
         }else{
             //Devolvemos respuesta
             return response()->json([
-                'messsage' => 'Post no existe'
+                'messsage' => 'Product no existe'
             ], 401);
         }
     }

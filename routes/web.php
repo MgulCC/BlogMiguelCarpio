@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,8 @@ use App\Http\Controllers\PostController;
 */
 Route::resource('post', PostController::class)->middleware('auth');
 
+Route::resource('product', ProductController::class)->middleware('auth');
+
 Auth::routes(['register' => false, 'reset' => false]); //podemos decirle que desactive algunas seciones como registrarse o contraseña nueva
 
 //la ruta de home
@@ -22,4 +25,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/', [PostController::class, 'index'])->name('home');
+    Route::get('/', [ProductController::class, 'index'])->name('home');
 });
+

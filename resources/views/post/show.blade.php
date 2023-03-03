@@ -2,19 +2,17 @@
 
 @section('content')
 <div class="container">
-    datos de alumno
+    Vista del post
     <hr>
-    {{ $alumno->nombre . ' ' . $alumno->apellido }}
+    Titulo:
     <br>
-    Edad: {{ $alumno->direccion }}
+    {{$post->title}}
     <br>
-    Email: 
-    <a href="mailto:{{ $alumno->email }}" title="enviar un mensaje">
-        {{ $alumno->email}}
-    </a>
+    Contenido:
     <br>
-    <img src="{{ asset('storage') . '/' . $alumno->foto }}" width="50"/>
-    <a href="{{ url('alumno') }}">volver</a>
+    {{$post->status }}
+    <br>
+    <a class="btn btn-primary" href="{{ url('post') }}" >volver</a>
 
 </div>
 @endsection

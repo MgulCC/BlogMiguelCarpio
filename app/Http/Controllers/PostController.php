@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Post; //llamar al model de alumno
+use App\Models\Post; //llamar al model de post
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -18,23 +18,23 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        return view('post.create');
     }
 
     public function store(Request $request)
     {
         $post = new Post();
         $post->title = $request->input('title');
-        $post->content = $request->input('status');
+        $post->status = $request->input('status');
         $post->user_id = auth()->user()->id; // El ID del usuario autenticado
         $post->save();
 
-        return redirect()->route('posts.index');
+        return redirect()->route('post.index');
     }
 
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        return view('post.edit', compact('post'));
     }
 
     public function update(Request $request, Post $post)
@@ -43,20 +43,19 @@ class PostController extends Controller
         $post->content = $request->input('content');
         $post->save();
 
-        return redirect()->route('posts.index');
+        return redirect()->route('post.index');
     }
 
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+        return view('post.show', compact('post'));
     }
 
     public function destroy(Post $post)
     {
         $post->delete();
 
-        return redirect()->route('posts.index');
+        return redirect()->route('post.index');
     }
 
-    //public function userPosts(User $
 }
